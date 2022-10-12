@@ -6,18 +6,20 @@
 - [1.1 Basic Forensics](https://github.com/letiendat198/miniCTFWriteUP/blob/master/README.md#11-basic-forensics) 
 - [1.2 What is Netcat](https://github.com/letiendat198/miniCTFWriteUP/blob/master/README.md#12-what-is-netcat) 
 - [1.3 Abcbof](https://github.com/letiendat198/miniCTFWriteUP/blob/master/README.md#13-abcbof) 
-- [1.4 Rock, Paper, Scissors]()
-2. [Web](#web)
-- [2.1 PHP Moon Cake]()
-- [2.2 Get out of here]()
-- [2.3 Find Flag]()
-- [2.4 keiichi]()
-3. [Forensics]()
+- [1.4 Rock, Paper, Scissors](https://github.com/letiendat198/miniCTFWriteUP#14-rock-paper-scissors)
+2. [Web](https://github.com/letiendat198/miniCTFWriteUP#2-web)
+- [2.1 PHP Moon Cake](https://github.com/letiendat198/miniCTFWriteUP#21-php-moon-cake)
+- [2.2 Get out of here](https://github.com/letiendat198/miniCTFWriteUP#22-get-out-of-here)
+- [2.3 Find Flag](https://github.com/letiendat198/miniCTFWriteUP#23-find-flag)
+- [2.4 keiichi](https://github.com/letiendat198/miniCTFWriteUP#23-keiichi)
+- [2.5 ISP Info]()
+3. [Forensics](https://github.com/letiendat198/miniCTFWriteUP#3-forensics)
 - [3.1 Correct File?]()
 - [3.2 Japanese Food]()
 - [3.3 Where is Nemo?]()
 - [3.4 Are you Wibu??]()
 - [3.5 OnlyFan]()
+- [3.6 Love n Light]()
 4. [Cryptography]()
 - [4.1 Do you know what is basecrack]()
 - [4.2 Love Song]()
@@ -30,6 +32,7 @@
 -  [5.2 EZ RE]()
 -  [5.3 Loop Key]()
 -  [5.4 XOR]()
+-  [5.5 Lost Obfuscation]()
 6. [Misc]()
 -  [6.1 Best Avatar]()
 -  [6.2 Base64]()
@@ -299,7 +302,7 @@ Một trong web không có gì bất thường và Inspect cũng không có manh
 
 Flag: `ISPCTF{HAv3_Fnu_Vvlt5_W3b}`
 
-### 2.3 Keiichi
+### 2.4 Keiichi
 
 Trang web này Inspect giống như một mê cung vậy.
 
@@ -313,7 +316,7 @@ Tìm thấy phần đầu của flag rồi. Sau khi nghịch bài Sqli blind th�
 
 ![1](Web/keiichi/3.png)
 
-Và kia là phần 2 của flag. Đến đây thì mình bí và đi mua hint để rồi cái hint nó chỉ mình cái biết rồi :). Sau một hồi ngắm nó thì có vẻ phần 2 của flag là một dạng url. Thử cho lên thanh url xem sao. 
+Và kia là phần 2 của flag. Sau một hồi ngắm nó thì có vẻ phần 2 của flag là một dạng url. Thử cho lên thanh url xem sao. 
 
 ![1](Web/keiichi/4.png)
 
