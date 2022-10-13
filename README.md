@@ -24,9 +24,9 @@
 - [4.1 Do you know what is basecrack]()
 - [4.2 Love Song]()
 - [4.3 Ceasar Knight]()
-- [4.4 You are noob]()
-- [4.5 ROTTOR]()
-- [4.6 UwU]()
+- [4.4 UwU]()
+- [4.5 You are noob]()
+- [4.6 ROTTOR]()
 5. [Reverse Engineering]()
 -  [5.1 Baby Kinzx]()
 -  [5.2 EZ RE]()
@@ -332,7 +332,7 @@ Và kia là phần 2 của flag. Sau một hồi ngắm nó thì có vẻ phần
  
  ![1](Web/ISP_Info/1.png)
  
- Hmmm, muốn giả làm ISPER thì chắc phải thay đổi Request đến server thôi. Cụ thể là `User-Agent`. Dùng Burp Suite để làm việc này he.
+ Hmmm, muốn giả làm ISPER thì chắc phải thay đổi Request đến server thôi. Cụ thể là Header `User-Agent`. Dùng Burp Suite để làm việc này he.
  
   ![1](Web/ISP_Info/2.png)
  
@@ -544,4 +544,553 @@ Flag kia rồi: `ISPCTF{Fr0m_kA1z_w1tH_L0v3}`
 
 ## 4 Cryptography
 
+### 4.1 Do you know what is basecrack
 
+Đề bài cho chúng ta một file với nội dung
+
+```
+M0hXSWM5RWJTcFZQS0xHZTI0ZnliTXpNU09RcUlHSHJkNVVGbW9zU0EzNnJBTGpkWWlJUE0xVzFJbXNOdUtxT0ZCMUpMWkJGQzF5aWN6Y2UxZXY2NmJXNFE=
+```
+
+Tiêu đề có vẻ gợi ý về công cụ [này](https://basecrack.herokuapp.com/) có thể giải được các loại base encode
+
+Nhập dãy ký tự kia vào trang này để giải mã. Lần đâu ra được dòng chữ này 
+```
+3HWIc9EbSpVPKLGe24fybMzMSOQqIGHrd5UFmosSA36rALjdYiIPM1W1ImsNuKqOFB1JLZBFC1yiczce1ev66bW4Q [Base64]
+```
+Lại copy dãy ký tự kia vào ô decode để giải ra tiếp. Cứ lặp lại như vậy cho đến khi thấy flag: `ISPCTF{1_you_kn0w_Base_Crack}`
+
+### 4.2 Love Song
+
+Một file âm thanh kêu bíp bíp. Nghe phát là nhớ ngay ra mã Morse rồi nhỉ. Nếu như mình, không nghe được mã Morse thì có thể lên mấy trang web dịch mã Morse như [này](https://morsecode.world/international/decoder/audio-decoder-adaptive.html)
+
+![1](Cryptography/Love_Song/1.png)
+
+Vì một lý do nào đấy mà lần nghe đầu bị lỗi (Mấy lần mình thử đều vậy). Bấm nghe lại thêm lần nữa thì mới chuẩn
+Flag: `ISPCTF{how_can_you_fix_it_?}` (Chắc vậy mình không nhớ lắm. không biết có viết hoa ko)
+
+### 4.3 Ceasar Knight
+
+Một file `txt` có nội dung 
+```
+DNKXOA{c3gg0_DNK_1337}
+```
+
+Số lượng các ký tự và 2 dấu {} đã đúng rồi. Chỉ có các ký tự nhìn hơi kỳ quặc thôi. Và thường thì đảo chữ này sang chữ khác thì mình hay nghĩ đến `ROT` (Rotate). Lên [dcode.fr](https://www.dcode.fr/rot-cipher) đi họ có tool brute force tất cả các loại ROT khá là tiện
+![1](Cryptography/Ceasar_Knight/1.png)
+Flag ở ngay đầu luôn kìa: `ISPCTF{h3ll0_ISP_1337}`
+
+### 4.4 UwU
+
+Nói thật là nhìn vô cái đề bài mình cũng chả biết là cái gì luôn á. 
+```
+925-00U1&>U557S-N8V]D95]N;W1?57=5?0``
+`
+```
+Nhưng mà tiện thay là [dcode.fr](https://www.dcode.fr/cipher-identifier) cũng có tool để tự phát hiện cipher. Và bùm `dcode.fr` đề xuất ra UUencode. Đề bài tên là UwU. Có vẻ liên quan rồi đây. Nhập vào để giải UUencode là ra flag rồi.
+![1](Cryptography/UwU/1.png)
+Flag: `ISPCTF{UU_3ncode_not_UwU}`
+
+### 4.5 You are noob
+<!-- Huhu dài quá cứu bé -->
+Một file `txt` với nội dung
+```
+aHR0cHM6Ly93d3cuaW5zdGFncmFtLmNvbS80Y2MzZXNzX20zLw==
+```
+Dấu bằng ở cuối là hint cho `base64` rồi. Decode ra xem nào.
+
+![1](Cryptography/URNOOB/1.png)
+
+Link Instagram kia dẫn tới một cái bio thú vị
+
+![2](Cryptography/URNOOB/2.png)
+Dòng thứ 3 trong bio là một dãy số. Thử đổi nó sang chữ bằng cách dùng [Decimal to Text](https://cryptii.com/pipes/decimal-text)
+
+![3](Cryptography/URNOOB/3.png)
+Kia là phần đâu của flag rồi: `ISPCTF{c4T_M3`. Phần còn lại chắc chắn là ở dòng cuói trên cái bio Instagram kia.
+```
+HR0cHM6Ly9pZGVvbmUuY29tL0Z4Q0xQOQ==
+```
+Lại là dấu "=" hint về base64. Decode xem ra cái gì nào.
+ 
+ ![4](Cryptography/URNOOB/4.png)
+ Link kia dẫn tới trang Web này 
+![4](Cryptography/URNOOB/5.png)
+
+Dòng thứ 2 có vẻ là thứ gì đó được mã hóa. Còn dòng thứ 3 có vẻ lại là mã hóa base64. Lại giải ra thôi
+
+![4](Cryptography/URNOOB/6.png)
+
+Mở link google docs kia ra cho ta một bức ảnh này.
+
+![4](Cryptography/URNOOB/7.png)
+
+Có vẻ là hint. Dec có lẽ nói Decimal và vừa này mình dùng dữ kiện này rồi. Cái còn lại là rail, có lẽ nhắc đến cipher [Rail fence](https://cryptii.com/pipes/rail-fence-cipher). Vậy decode nốt cái dòng mà mình chưa dùng thôi
+
+![8](Cryptography/URNOOB/8.png)
+Phần cuối cùng của flag kia rồi. Ghép lại chúng ta có flag: `ISPCTF{c4T_M3_1f_u_C4n?}`
+
+### 4.6 ROTTOR
+Đề bài cho chúng ta một bức ảnh nhìn có vẻ giống QR Code nhưng mà thiếu mất vài phần
+![1](Cryptography/ROTTOR/Rot.png)
+
+Nghiên cứu một chút về cấu trúc của một QR Code thì mình tìm thấy cái ảnh này khá hữu ích
+![1](Cryptography/ROTTOR/1.png)
+Theo như ảnh trên thì có vẻ như QR Code mà đề bài cho bị thiếu mất 3 góc. Chỉ cần ghép vào là scan được rồi (Hoặc nếu bạn không biết ghép thì có thể ngồi vẽ lại từng block một như mình)
+
+![1](Cryptography/ROTTOR/2.png)
+
+Scan mã QR này đưa ta tới một trang [web](https://cdn.me-qr.com/png/8349524.png)
+
+![1](Cryptography/ROTTOR/3.png)
+
+Cái kia nhìn giống cái form flag rồi đó. Nhưng mà các chữ cái nhìn có vẻ sai sai. Tên đề bài là ROTTOR mà từ nãy đến giờ cũng chưa rotate cái gì cả. Vậy chắc đây là `ROT` cipher rồi.
+
+![1](Cryptography/ROTTOR/4.png)
+Kia rồi. Flag: `ISPCTF{0h_mY_90D_y0u_931_i1}`
+
+## Reverse Engineering
+
+### 5.1 Baby Kinzx
+Đề bài cho chúng ta một đoạn code C++ với thuật toán để giải từ `char array license` sang flag
+```
+#include<stdio.h>
+#include<string.h>
+#include<Windows.h>
+int main(){
+	
+	puts("Pls, Enter your License : ");
+	char license[]="010010010101001101010000010000110101010001000110011110110101111101100010011010010111010001011111011000100110100101110100011000110110100001011111011000100110010101100001011000110110100001111101";
+	char my_license[100];
+	fgets(my_license,100,stdin);
+	if(strlen(my_license)==25){
+		puts("[+] Checking....");
+		Sleep(3000);
+		int l = (int)strlen(license);
+		unsigned char flag[24] = {};
+		
+		for(int i=0;i<l;i+=8){
+			for(int j=i;j<(i+8);j++){
+				int pos = (int)(i/8);
+				flag[pos] <<= 1;
+				flag[pos] += license[j] - 0x30;
+			}
+		}
+		flag[24]=0;
+		if(memcmp(flag,my_license,24)==0){
+			puts("Cracked!");
+		}else{
+			puts("Are you hacker ?");
+		}
+	}else{
+		puts("Invalid License!");
+	}
+}
+```
+
+Vì `license` được dịch từ một đống 0 và 1 sang chữ để xuất ra ngoài. Nên chúng ta chỉ cần lấy `array license` và thuật toán giải rồi đưa màn hình kết quả là được rồi
+```
+#include<stdio.h>
+#include<string.h>
+
+int main()
+{
+    char license[]="010010010101001101010000010000110101010001000110011110110101111101100010011010010111010001011111011000100110100101110100011000110110100001011111011000100110010101100001011000110110100001111101";
+    int l = (int)strlen(license);
+		unsigned char flag[24] = {};
+		
+		for(int i=0;i<l;i+=8){
+			for(int j=i;j<(i+8);j++){
+				int pos = (int)(i/8);
+				flag[pos] <<= 1;
+				flag[pos] += license[j] - 0x30;
+			}
+		}
+		flag[24]=0;
+	printf("%s",flag);
+}
+```
+
+Compile rồi chạy thôi
+```
+$ ./a.out   
+ISPCTF{_bit_bitch_beach}
+```
+
+### 5.2 EZ RE
+Mở file code lên là flag là lộ ngay rồi.
+```
+#include <stdio.h>
+#include <string.h>
+int main()
+{
+    printf("-------------------CUOC_BAT_BAT_DAU-----------------------------\n");
+    printf("Input Flags: ");
+    char flag[33] = {};
+    puts(flag);
+    fgets(flag, sizeof(flag), stdin);
+    if (strlen(flag) == 32 &&
+        flag[0] == 'd' &&
+        flag[29] == '3' &&
+        flag[4] == 'r' &&
+        flag[2] == '5' &&
+        flag[23] == 'r' &&
+        flag[3] == 'c' &&
+        flag[17] == '4' &&
+        flag[1] == '3' &&
+        flag[7] == 'b' &&
+        flag[10] == '_' &&
+        flag[5] == '4' &&
+        flag[9] == '3' &&
+        flag[11] == 't' &&
+        flag[15] == 'c' &&
+        flag[8] == 'l' &&
+        flag[12] == 'H' &&
+        flag[20] == 'c' &&
+        flag[14] == '_' &&
+        flag[6] == 'm' &&
+        flag[24] == '5' &&
+        flag[18] == 'r' &&
+        flag[13] == '3' &&
+        flag[19] == '4' &&
+        flag[21] == 'T' &&
+        flag[16] == 'H' &&
+        flag[27] == 'f' &&
+        flag[30] == 'b' &&
+        flag[25] == '_' &&
+        flag[22] == '3' &&
+        flag[28] == '6' &&
+        flag[26] == 'f' && 
+        flag[31] == '0')
+    {
+        printf("ISPCTF{");
+        printf("%s", flag);
+        printf("}");
+```
+Nhiệm vụ còn lại là sắp xếp cho đúng thứ tự thôi. Cứ dựa vào index từ 0-31 mà sắp xếp là ra flag rồi (Xin lỗi mình lười mọi người tự sắp xếp nha)
+
+### 5.3 Loop Key
+
+Một file code C++
+
+```
+#include <iostream>
+using namespace std;
+int check_flag(int data[])
+{
+    int a[] = {73,167,324,545,1360,2265,7908,133,160,277,860,1705,3696,6249,303,433,452,
+    1097,2084,3401,6672,538,704,909,1520,2497,2244,6809,833,941,1096,1353,1824,2625,4228,1276,1546};
+    for (int i = 0; i < 37; i++)
+    {
+        if (data[i] != a[i])
+            return 0;
+    }
+    return 1;
+}
+int s_203_key(string data)
+{
+    int src[100];
+    for (int i = 0; i < data.length(); i++)
+    {
+        src[i] = (((int)data[i] << ((char)i % 7)) + i * i);
+    }
+    check_flag(src);
+}
+int main()
+{
+    string flag;
+    cout << "_______________BAT_DAU_______________" << endl;
+    cout << "Inputflag : ";
+    cin >> flag;
+    if (s_203_key(flag) == 1)
+        cout << "correct!!!";
+    else
+        cout << "incorrect!!!";
+}
+```
+Có thể thấy được là input từ user sẽ được chuyển về số giống với format của flag sau đó được đem đi so sánh. Vậy thì không làm giống bài Baby Kinzx được rồi. Chúng ta phải giải từ `array a[]` kia giải về lại input chữ
+
+Đầu tiên là trừ đi cái đoạn (i*/i) đã/ vì cái này scale theo index nên sẽ khiến cho các số của phần bị mã hóa kia (`a[]`) không đồng nhất
+```
+nt a[] = {73,167,324,545,1360,2265,7908,133,160,277,860,1705,3696,6249,303,433,452,
+    1097,2084,3401,6672,538,704,909,1520,2497,2244,6809,833,941,1096,1353,1824,2625,4228,1276,1546};
+    int processed[36];
+    int result[36];
+    for (int i = 0; i< 37; i++){
+       processed[i] = a[i] - i*i;
+       printf("processed: %i \n", processed[i]);
+    }
+```
+
+Bây giờ thì nghịch đảo lại cái bit shift `(int)data[i] << ((char)i % 7)` thành `result[i] =  processed[i] >> ((char)i %7);` là ra kết quả rồi
+
+Đây là script đầy đủ
+```
+#include <iostream>
+using namespace std;
+
+int main(){
+   int a[] = {73,167,324,545,1360,2265,7908,133,160,277,860,1705,3696,6249,303,433,452,
+    1097,2084,3401,6672,538,704,909,1520,2497,2244,6809,833,941,1096,1353,1824,2625,4228,1276,1546};
+    int processed[36];
+    int result[36];
+    for (int i = 0; i< 37; i++){
+       processed[i] = a[i] - i*i;
+       printf("processed: %i \n", processed[i]);
+    }
+    for (int i =0; i < 37; i++){
+        result[i] =  processed[i] >>  ((char)i %7);
+        printf("%c", result[i]);
+    }
+}
+```
+Giờ chỉ phải chạy thôi. Flag: `ISPCTF{T01_co_kh1en_ban_vu1_12112003}`
+
+### 5.4 XOR
+<!-- Mãi chua-->
+Lại là C++
+```
+#include <stdio.h>
+#include <string.h>
+
+char LAW(char a, char b) {
+    return !(a | b);
+}
+char LOST(char a) {
+    return LAW(a, a);
+}
+char END(char a, char b) {
+    return LOST(LAW(a, b));
+}
+char OO(char a, char b) {
+    return LOST(END(LOST(a), LOST(b)));
+}
+char ISPCLUB(char a, char b) {
+    return END(OO(a, LOST(b)), OO(LOST(a), b));
+}
+int main() {
+    unsigned char input[15];
+    unsigned char cipher[15] = { 0xe7,0x99,0xdb,0xf6,0x98,0xda,0xf6,0xda,0x99,0xf6,0xe4,0x9d,0xce,0x98,0xca };
+    unsigned char your_cipher[15];
+    char key[] = { 1,0,0,1,0,1,0,1 };
+    printf("Enter Flag : ");
+    fgets((char*)input, sizeof(input) + 1, stdin);
+
+    for (char i = 0; i < sizeof(input); i++) {
+        char tmp[8] = { 0,0,0,0,0,0,0,0 };
+        unsigned char result = 0;
+
+        for (char b = 0; b < 8; b++) {
+            char bit_1 = (input[i] >> b) & 1;
+            char bit_2 = key[b];
+            char rs = ISPCLUB(bit_1, bit_2);
+            tmp[b] = rs;
+        }
+        for (char k = 7; k >= 0; k--) {
+            result = (result << 1) + tmp[k];
+        }
+        your_cipher[i] = result;
+    }
+    for (char i = 0; i < 15; i++) {
+        if (your_cipher[i] != cipher[i]) {
+            printf("Incorrect!");
+            return 1;
+        }
+    }
+    printf("GOOD! HERE IS YOUR FLAG ISPCTF{%s}", input);
+}
+```
+Có vẻ như là thuật toán gì đó đưa user input về lại thành một cái format giống `cipher[]` rồi so sánh
+
+Mình đã thử viết ngược lại rồi nhưng bị kẹt ở phần này `char bit_1 = (input[i] >> b) & 1;` bởi vì không thể suy ngược biwise AND (Chắc là có cách nào khác)
+
+Nhưng mà mình đã nghĩ ra một trò khác. Vì `cipher[]` không bị ảnh hưởng bởi index (như Loop key) nên chúng ta có thể mò xem chữ cái nào tương ứng với số bao nhiêu và từ đó suy ra được flag
+
+Đầu tiên đổi lại `char cipher[]` từ dạng hex sang decimal cho dễ hiểu nha 
+
+```
+unsigned char cipher[15] = { 0xe7,0x99,0xdb,0xf6,0x98,0xda,0xf6,0xda,0x99,0xf6,0xe4,0x9d,0xce,0x98,0xca };
+//231, 153, 219, 246, 152, 218, 246, 218, 153, 246, 228, 157, 206, 152, 202
+```
+
+Bây giờ thì thêm một dòng `printf` thần kì để debug xem chữ nào tương ứng với số nào thôi
+
+```
+your_cipher[i] = result;
+printf("Your cipher: %i \n", result);
+```
+
+Như vậy là được rồi. Nhưng mà mò từng chữ một hơi lâu nên mình viết script python cho tiện nha 
+
+```
+import subprocess
+
+#231, 152, 219, 246, 152, 218, 246, 218, 153, 246, 228, 157, 206, 152, 202
+
+printable = list("!#$%&\'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~'")
+cipher = [231, 153, 219, 246, 152, 218, 246, 218, 153, 246, 228, 157, 206, 152, 202]
+flag = "ISPCTF{"
+for i in cipher:
+   for b in printable:
+       script = subprocess.Popen("./a.out", stdin=subprocess.PIPE,stdout=subprocess.PIPE)
+       res = str(script.communicate(b.encode()))
+       if str(i) in res:
+          print("{} is {}".format(i, b))
+          flag += b
+flag+="}"
+print(flag)
+```
+
+Chạy script python trên là ra được flag rồi (Nhớ compile file C++ đã sửa thành a.out trước nha)
+```
+python3 brute.py                  
+231 is N
+153 is 0
+219 is r
+246 is _
+152 is 1
+218 is s
+246 is _
+218 is s
+153 is 0
+246 is _
+228 is M
+157 is 4
+206 is g
+152 is 1
+202 is c
+ISPCTF{N0r_1s_s0_M4g1c}
+```
+
+### 5.5 Lost Obfuscation
+Một script rất dài và chạy rất lâu. Script này có vẻ sẽ tự in ra flag chỉ là mất rất lâu mà thôi. Vậy thì phải tối ưu nó
+
+Cách mà mình tìm chỗ quan trọng để tối ưu là hãy chèn một dòng `print()` vào trước phần function call mà bạn nghĩ sẽ chậm thôi. Nếu trên terminal cứ kẹt ở đấy mãi thì có vẻ chỗ đó cần tối ưu. `_0xdeadbeef` là hàm chính nên bắt đầu từ đây nhỉ
+
+```
+def _0xdeadbeef():
+    v0 = len(c9df35)
+    for i in range(v0):
+        print("Spend time on 0x4")
+        _0x4b891c(b9f01d)
+        print("Spend time on 0x4 2nd")
+        _0x4b891c(a81cd9)
+        print("Spend time on coffee")
+        v1 = _0xc00ffee(ac71d0[i])
+        print("Spend time on bae")
+        _0xbae103(c9df35[i], v1)
+        print("Almost there")
+        v2 = _0x5be091(v1)
+        v2 -= i
+        print(chr(v2), flush=True, end = '')
+```
+
+Sau khi chạy thì ta thấy script này mắc kẹt ở hàm `_0xc00ffee` là lâu nhất. Vậy thì tối ưu nó trước. Vẫn vậy, chèn thêm `print()` vào trước các dòng có function call của `_0xc00ffee` để xem xem cái gì tốn thời gian nhất
+```
+def _0xc00ffee(v0):
+    v1 = 0
+    while (v0 != 1):
+        #print("Spend time on v2")
+        v2 = _0x3b091c(int(v0))
+        #print("Spend time on v0")
+        v0 = _0xd11111(v0, v2)
+        #print("Spend time on v3")
+        v3 = _0xbe4515(b9f01d, v2, v1)
+        if (v3 == -1):
+            b9f01d[v1] = v2
+            a81cd9[v1] += 1
+            v1 += 1
+        else:
+            a81cd9[v3] += 1
+    return v1 
+```
+
+Sau khi chạy thì ta thấy được `v2` và `v0` là lâu nhất, rồi sau đó sẽ kẹt hẳn ở `v2` luôn. Vậy thì có vẻ như `v0` chậm thì `v2` còn siêu chậm. Phải tối ưu thôi
+
+Bắt đầu từ `v0` trước hay chính là tối ưu hóa hàm `_0xd11111()` 
+```
+def _0xd11111(v0, v1):
+    v2 = 0
+    v3 = 0
+    while (v2 < v0):
+        v2 = v2 + v1
+        v3 = v3 + 1
+    return v3
+```
+Nhìn `while()` là đã thấy chậm rồi nhỉ. Nhưng logic của hàm này chỉ là tìm số `v3` nhỏ nhất để `v1 * v3 >= v0` (Mỗi lần loop v1 tự cộng với chính mình còn v3 thì tăng thêm 1. Cuối cùng thì tổng các v1 chính là bằng v1 * v3 chứ còn gì). Vậy thì viết lại ngắn gọn thôi
+```
+def _0xd11111(v0, v1): 
+# Tinh so v3 nho nhat de v1*v3 >= v0 
+#(Tức là v0 / v1 nếu ra số nguyên thì thì là =, nếu ra 
+#số thập phân mà làm tròn lên tròn lên thì sẽ >)
+    v3 = math.ceil(v0 / v1)
+    return v3
+```
+(Nếu vẫn chưa hiểu thì lấy ví dụ nè: v0=50, v1=25. Vậy v3 phải =2 thì sẽ là số nguyên nhỏ nhất làm cho v1 >= v0. Còn giả sử v0=51, v1=25 thì v3 phải =3 thì mới là số nguyên nhỏ nhất để v1 >= v0 (Tức là 51/25 làm tròn lên))
+(Ghi vậy mai sau em đọc lại cho dễ hiểu)
+Như vậy là từ phải loop đi loop lại thì giờ mọi chuyện chỉ cần giải quyết trong một phép toán ngắn ngọn. Vậy là giải quyết xong `_0xd11111()` và `v0`
+
+Bây giờ đến lượt `v2` hay chính là hàm `_0x3b091c()` cần tối ưu hóa
+```
+def _0x3b091c(v0):
+    v1 = 2
+    v2 = v0 
+    for i in range(v1, v2):
+        if (_0xd22222(v0, i) == 0):
+            return i
+    return v0
+```
+Hàm này lại gọi ra hàm `_0xd22222()`. Để xem nào
+```
+def _0xd22222(v0, v1):
+    v2 = 0
+    while (v2 <= v0):
+        v2 = v2 + v1
+    v2 -= v1 
+    return v0 - v2
+```
+Hàm `_0xd22222()` lại dùng loop nhưng thực ra logic của hàm này chỉ là để tìm dư của phép chia v0 / v1. Nếu chỉ vậy thì đâu cần phải loop phức tạp như vậy. Chỉ cần như này là đủ rồi
+```
+def _0xd22222(v0, v1):
+    return v0 % v1
+```
+
+Làm đến vậy rồi mà chạy vẫn chưa nhanh hơn là mấy. Vẫn bị kẹt lại ở phần `_0x3b091c()`. Vậy chứng tỏ hàm này vẫn cần phải tối ưu hóa. 
+```
+def _0x3b091c(v0):
+    v1 = 2
+    v2 = v0 
+    for i in range(v1, v2):
+        if (_0xd22222(v0, i) == 0):
+            return i
+    return v0
+```
+
+Nếu nhìn ta sẽ thấy logic của cả hàm này chỉ là tìm số bé nhất chia hết cho `v0` khác 1 (Hàm `_0xd22222()` là dùng để tìm số dư, ở đây là phép chia v0/i. Nếu bằng 0 (chia hết) thì trả về số i). Nếu số `v0` siêu to khổng lồ thì quá trình này mất khá lâu. Mình đã lên mạng để tìm cách tối ưu hóa phép toán này. Và mình tìm thấy đoạn code này ở trên [Stack Overflow](https://stackoverflow.com/questions/6800193/what-is-the-most-efficient-way-of-finding-all-the-factors-of-a-number-in-python)
+
+```
+#https://stackoverflow.com/questions/6800193/what-is-the-most-efficient-way-of-finding-all-the-factors-of-a-number-in-python
+def factors(n):
+    return set(reduce(list.__add__,
+                ([i, n//i] for i in range(1, int(n**0.5) + 1) if n % i == 0)))
+```
+(Đoạn code trên tìm tất cả các số chia hết cho số n. E vẫn hơi gà để hiểu rõ đoạn code trên làm gì)
+
+Bây giờ sửa lại `_0x3b091c()` để sử dụng đoạn code tối ưu bên trên thôi. 
+```
+def _0x3b091c(v0): #Tim so i trong khoang 2-v0 chia het cho v0
+    a = sorted(factors(v0))
+    return a[1]
+```
+
+Vì đoạn code tối ưu kia trả kết quả không theo thứ tự nào hết nên mình phải sort lại để chọn số bé nhất khác một (Là phần tử thứ 2)
+
+Như vậy chắc là được rồi, chạy thử thôi
+```
+$ python3 very_fun.py
+ISPCTF{d306fu5c4710n_15_5h0r7357_w4y_70_00f3d}  
+```
+
+(Mặc dù không nhanh kiểu ngay lập tức nhưng < 1 phút là đủ để kiếm flag rồi hehe)
+
+## 6. Misc

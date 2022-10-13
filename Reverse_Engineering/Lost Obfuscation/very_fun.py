@@ -71,7 +71,7 @@ def _0x015f99(v0, v1):
 def _0x1337fc(v0, v1): #
     return round(_0x015f99(v0, v1))  #Lam tron loga base e cua v0^v1
 
-def _0xd11111(v0, v1): # Tinh so nho nhat de v1*v3 > v0
+def _0xd11111(v0, v1): # Tinh so v3 nho nhat de v1*v3 >= v0
     v2 = 0
     v3 = math.ceil(v0 / v1)
     #while (v2 < v0):
@@ -81,7 +81,7 @@ def _0xd11111(v0, v1): # Tinh so nho nhat de v1*v3 > v0
     return v3
 
 def _0xd22222(v0, v1):
-    v2 = v0 / v1
+    #v2 = v0 / v1
     #i = 1
     #while (v2 <= v0):
         ##print("d22 Looping")
@@ -89,7 +89,7 @@ def _0xd22222(v0, v1):
         #i += 5
     #while (v2 > v0):
     #v2 = v2 -v1
-    return v2 % 1
+    return v0 % v1
 
 # hmm.. so weird, I'll be back with my coffee
 
@@ -136,8 +136,8 @@ def _0xc00ffee(v0):
 def _0xbae103(v0, v1):
     for i in range(v1):
         if (b9f01d[i] == v0):
-            b9f01d[i] = 1
-            a81cd9[i] = 1
+            b9f01d[i] = (b9f01d[i]^b9f01d[i])|1
+            a81cd9[i] = (a81cd9[i]^a81cd9[i])|1
 
 def _0x5be091(v0):
     v1 = 1
