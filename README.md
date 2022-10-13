@@ -49,7 +49,7 @@ Không có gì quá đặc biệt. Thử Inspect xem sao
 
 ![step2](Warm_Up/Basic_Forensics/2.png)
 
-Ở trong block **\<text\>** ta có thể thấy được flag: ISPCTF{7hAt_warm_up_gnys}
+Ở trong block `\<text\>` ta có thể thấy được flag: `ISPCTF{7hAt_warm_up_gnys}`
 	
 ### 1.2 What is Netcat
 
@@ -326,19 +326,222 @@ Và kia là phần 2 của flag. Sau một hồi ngắm nó thì có vẻ phần
  
  Vậy cuối cùng flag là: `ISPCTF{H3_1S_C0m3B4ck_Y0u_Can_find_him}`
  
+ ### 2.5 ISP Info
+ 
+ Đề bài cho chúng ta một trang web mà chỉ ISPER mới có thể truy cập
+ 
+ ![1](Web/ISP_Info/1.png)
+ 
+ Hmmm, muốn giả làm ISPER thì chắc phải thay đổi Request đến server thôi. Cụ thể là `User-Agent`. Dùng Burp Suite để làm việc này he.
+ 
+  ![1](Web/ISP_Info/2.png)
+ 
+ Có thể thấy dòng `User-Agent` đang là Mozilla Firefox. Phải sửa lại thôi
+ 
+  ![1](Web/ISP_Info/3.png)
+  Như này chắc là được rồi nhỉ. Forward tới Server xem phản ứng như thế nào thôi.
+  
+   ![1](Web/ISP_Info/4.png)
+   
+   Có thay đổi rồi kìa. Lần này trang web lại hỏi chúng ta xem có biết Facebook của CLB ISP không kìa. Để thể hiện là mình biết thì chắc chắn là phải được đích thân trang Facebook của ISP giới thiệu rồi. Cái này cũng fake được nữa nè. Dùng Header `Referer`. Quay trở lại với Burp Suite nào
+   
+   ![1](Web/ISP_Info/5.png)
+   Như vậy là được rồi. Chắc không bị lộ đâu. Để xem Server thấy sao nhỉ.
+   
+   ![1](Web/ISP_Info/6.png)
+   
+   Hmmm, địa chỉ localhost của mình à. Chắc hẳn là `127.0.0.1` rồi. Vậy làm sao để trả lời Server bây giờ? Dùng Header `X-Forwarded-For` chứ còn gì nữa.
+   
+   ![7](Web/ISP_Info/7.png)
+   Được rồi để xem có flag chưa.
+   
+   ![8](Web/ISP_Info/8.png)
+   
+   Lại là câu hỏi nữa. Để xem nào, Khoa ATTT PTIT thành lập vào Thứ 3, 05/04/2022 (Dạ làm riết cái bài này rồi em thuộc luôn đó). Để trả lời thì dùng Header `Date` là được rồi.
+   
+   ![9](Web/ISP_Info/9.png)
+   Để xem câu đố tiếp theo là gì nào. 
+   ![10](Web/ISP_Info/10.png)
+   
+   Để thể hiện trình độ Tiếng Việt của bản thân thì phải dùng header `Accept-Language` rồi. Nhưng mà không phải `vi-VN,vi` mà là `vi-vi,vi`
+   
+   ![11](Web/ISP_Info/11.png)
+   Cuối cùng thì cũng xong rồi
+   ![12](Web/ISP_Info/12.png)
+   
+   Flag: `ISPCTF{N0w_Y0u_Kn3w_4b0ut_ISP_Y0ur_W3lC0m3}`
+  
+ 
 ## 3. Forensics
 
+### 3.1 Correct File?
+
+Đề bài cho chúng ta một file có tên `file.zip`. Hãy thử giải nén nó ra đã. 
+Chúng ta sẽ có một file `file.mp3`. Nếu Media Player của bạn thông minh (Như VLC và vài cái nữa chẳng hạn) thì có lẽ đã thấy video chứa flag rồi. Nhưng nếu không thì hãy thử check xem file này có đúng là file `mp3` không nhé. Trong đa số các trường hợp thì dùng câu lệnh `file` là đủ rồi.
+
+```
+$ file file.mp3                                       
+file.mp3: ISO Media, MP4 v2 [ISO 14496-14]
+```
+
+Vậy là lộ rồi. Đây rõ ràng là một file `mp4`. Đổi lại đuôi file thành `.mp4` để thấy flag thôi.
+
+Flag: `ISPCTF{i_am_following_you}`
+
+### 3.2 Japanese Food
+
+Đề bài đưa ta đến một MV của Chipu. Và đừng như mình `xem đi xem lại 5-6 lần` để ghép flag mà hãy xem đến cuối video, nơi mà một mã QR chứa flag đang đợi bạn. Bài học rút ra là hãy luôn xem đến hết video.
+
+![1](Forensics/Japanese_Food/1.png)
+
+Flag: `ISPCTF{Pe0ple_mAke_1t_complicat3d}`
+
+### 3.3 Where is Nemo
+
+Đề bài cho chúng ta một file `jpg` (Ủa mình nhớ lúc mình làm là file `webp` mà nhỉ). Nhưng mà thôi không sao, cái mấu chốt là file `jpg` này mở không được (Hoặc ít nhất là phần mềm xem ảnh của mình không mở được). Khả nghi nhỉ. Hãy dùng `file` thử xem 
+```
+$ file Where_is_Nemo.jpg
+Where_is_Nemo.jpg: RIFF (little-endian) data, Web/P image, VP8 encoding, 1600x1200, Scaling: [none]x[none], YUV color, decoders should clamp
+```
+
+Thì ra đây là file `webp` thảo nào không mở được nhỉ. Nhưng vẫn thấy khả nghi, thôi dùng `binwalk` cho chắc
+
+```
+$ binwalk Where_is_Nemo.jpg                               
+
+DECIMAL       HEXADECIMAL     DESCRIPTION
+--------------------------------------------------------------------------------
+140384        0x22460         RAR archive data, version 5.x
+274255        0x42F4F         TIFF image data, big-endian, offset of first image directory: 8
+274281        0x42F69         RAR archive data, version 5.x
+363715        0x58CC3         RAR archive data, version 5.x
+400673        0x61D21         RAR archive data, version 5.x
+```
+
+Vậy là lộ hết luôn rồi. Hóa ra đây thực chất là file `rar`, bên trong chưa 3 file `rar` nữa. Giải nén thôi
+
+```
+$ unrar x Where_is_Nemo.jpg
+
+UNRAR 6.12 freeware      Copyright (c) 1993-2022 Alexander Roshal
 
 
+Extracting from Where_is_Nemo.jpg
+
+Extracting  crush.jpg                                                 OK 
+All OK
+```
+
+Giải nén xong lại có một file `crush.jpg` kìa. Theo như `binwalk` thì đây thực chất vẫn là file `rar` thôi. Lại giải nén tiếp
+
+```
+$ unrar x crush.jpg        
+
+UNRAR 6.12 freeware      Copyright (c) 1993-2022 Alexander Roshal
 
 
+Extracting from crush.jpg
+
+Extracting  marlin.jpg                                                OK 
+All OK
+```
+
+Lại ra một file nữa tên `marlin.jpg`. Nhưng mà vẫn vậy, giải nén tiếp
+
+```
+$ unrar x marlin.jpg     
+
+UNRAR 6.12 freeware      Copyright (c) 1993-2022 Alexander Roshal
 
 
+Extracting from marlin.jpg
+
+Extracting  dory.jpg                                                  OK 
+All OK
+```
+
+Ra một file tên `dory.jpg`. File này có lẽ là file `rar` giả mạo thứ 3 mà `binwalk` nhắc đến rồi. Giải nén nốt thôi
+
+```
+$ unrar x dory.jpg  
+
+UNRAR 6.12 freeware      Copyright (c) 1993-2022 Alexander Roshal
 
 
+Extracting from dory.jpg
+
+Extracting  nemo.txt                                                  OK 
+All OK
+```
+
+File `txt` gì mà mở lên lại toàn kí tự lạ không đọc được. Chắc lại là hàng fake rồi. Thử dùng `file` xem. 
+
+```
+$ file nemo.txt             
+nemo.txt: JPEG image data, JFIF standard 1.01, resolution (DPI), density 120x120, segment length 16, Exif Standard: [TIFF image data, big-endian, direntries=1, orientation=upper-left], baseline, precision 8, 2000x3000, components 3
+```
+
+Thì ra đây là một file `.jpeg`. Đổi lại đuôi file và mở lên thôi
+
+![1](Forensics/Where_is_Nemo/nemo.jpeg)
+Flag: `ISPCTF{y0u_5ave_Nem0_f15h}`
+
+### 3.4 Are you Wibu
+
+Đề bài cho chúng ta một file ảnh `Are_u_wibu.jpeg`. Mở lên bình thường, `file` và `binwalk` cũng thấy không có gì bất thường. Vậy nhìn nội dung đã
+
+![1](Forensics/AYWB/Are_u_wibu.jpeg)
 
 
+Có chữ gì đó nhưng bị xáo trộn lên hết rồi. Nếu để ý kỹ ta có thể thấy được sự liên quan giữa các dòng
+
+![2](Forensics/AYWB/1.jpeg)
+
+Cứ cách 2 dòng lại có một dòng liên quan đến nhau (Phần màu đỏ). Thử ghép chúng lại với nhau xem có đọc được chữ không nhé
+
+![2](Forensics/AYWB/2.jpeg)
+
+Có chữ đọc được rồi này `ISPCTF{w1bu_n3`. Có vẻ mới chỉ có phần đầu của flag thôi. Phần sau chắc chắn vẫn còn ở trong bức ảnh này. Vẫn còn các dòng mà mình chưa dùng mà. Vẫn vậy, cứ cách 2  dòng lại có một dòng liên quan đến nhau, lần này là các dòng ở phía trên các dòng trước (Phần màu xanh)
+
+![2](Forensics/AYWB/3.jpeg)
+
+Hãy thử ghép chúng lại với nhau xem 
+
+![2](Forensics/AYWB/4.jpeg)
+Ra vế sau của flag rồi `v3r_d13_1337}`. Vậy cuối cùng flag là `ISPCTF{w1bu_n3v3r_d13_1337}`
+
+### 3.5 OnlyFan
+
+Đề bài cho chúng ta một dòng chữ bị swirl khá là nặng
+
+![1](Forensics/OF/Round.png)
+Nhưng rất may là swirl có thể đảo ngược được. Trong lúc tìm cách thì mình thấy có cái tool online này làm rất tốt luôn này `https://www.photo-kako.com/en/swirl/`
+
+![2](Forensics/OF/1.png)
+
+Muốn unswirl thì phải chỉnh `Angle` về giá trị âm chứ nhỉ 
+
+![2](Forensics/OF/2.png)
+
+Bắt đầu đọc được chữ rồi. Lưu về máy và làm lại thêm một lần nữa là ra kết quả rồi.
+
+![2](Forensics/OF/3.png)
+
+Flag: `ISPCTF{r0und_n_r0und_1908absc}`
+
+### 3.6 Love n Light
+
+Đề bài cho chúng ta một file ảnh nhìn khá bình thường cũng không có manh mối gì cả, `file` và `binwalk` kể cả `xxd` (hex dump) cũng không có gì bất thường. Vậy chắc vấn đề phải ở trong chính bức ảnh rồi. Mình tìm thấy một tool Forensics online khá hay ho `https://29a.ch/photo-forensics/`
+
+![1](Forensics/LnL/1.png)
+
+Mở vào phần Error Level Detection (Theo như khả năng đọc hiểu của mình thì là để xem xem ảnh có bị chỉnh sửa chỗ nào không vì nếu bị chỉnh sửa thì Error Level sẽ khác các phần còn lại của ảnh)
+
+![1](Forensics/LnL/2.png)
+
+Flag kia rồi: `ISPCTF{Fr0m_kA1z_w1tH_L0v3}`
 
 
+## 4 Cryptography
 
 
