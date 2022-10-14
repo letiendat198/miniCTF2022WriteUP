@@ -1052,7 +1052,7 @@ def _0xd22222(v0, v1):
     v2 -= v1 
     return v0 - v2
 ```
-Hàm `_0xd22222()` lại dùng loop nhưng thực ra logic của hàm này chỉ là để tìm dư của phép chia v0 / v1. Nếu chỉ vậy thì đâu cần phải loop phức tạp như vậy. Chỉ cần như này là đủ rồi
+Hàm `_0xd22222()` lại dùng loop nhưng thực ra logic của hàm này chỉ là để tìm dư của phép chia v0 / v1 (Hàm này tìm bội của v1 lớn nhất thỏa mãn <= v0 sau đó lấy v0 trừ đi thì chính là phần dư của phép chia v0 /v1). Nếu chỉ vậy thì đâu cần phải loop phức tạp như vậy. Chỉ cần như này là đủ rồi
 ```
 def _0xd22222(v0, v1):
     return v0 % v1
