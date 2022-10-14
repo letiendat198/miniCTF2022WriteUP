@@ -636,6 +636,7 @@ Phần cuối cùng của flag kia rồi. Ghép lại chúng ta có flag: `ISPCT
 
 Nghiên cứu một chút về cấu trúc của một QR Code thì mình tìm thấy cái ảnh này khá hữu ích
 ![1](Cryptography/ROTTOR/1.png)
+
 Theo như ảnh trên thì có vẻ như QR Code mà đề bài cho bị thiếu mất 3 góc. Chỉ cần ghép vào là scan được rồi (Hoặc nếu bạn không biết ghép thì có thể ngồi vẽ lại từng block một như mình)
 
 ![1](Cryptography/ROTTOR/2.png)
@@ -652,7 +653,7 @@ Kia rồi. Flag: `ISPCTF{0h_mY_90D_y0u_931_i1}`
 ## Reverse Engineering
 
 ### 5.1 Baby Kinzx
-Đề bài cho chúng ta một đoạn code C++ với thuật toán để giải từ `char array license` sang flag
+Đề bài cho chúng ta một đoạn code C++ với thuật toán để giải từ `char license[]` sang flag
 ```
 #include<stdio.h>
 #include<string.h>
@@ -688,7 +689,7 @@ int main(){
 }
 ```
 
-Vì `license` được dịch từ một đống 0 và 1 sang chữ để xuất ra ngoài. Nên chúng ta chỉ cần lấy `array license` và thuật toán giải rồi đưa màn hình kết quả là được rồi
+Vì `license` được dịch từ một đống 0 và 1 sang chữ để xuất ra ngoài. Nên chúng ta chỉ cần lấy `license[]` và thuật toán giải rồi đưa màn hình kết quả là được rồi
 ```
 #include<stdio.h>
 #include<string.h>
@@ -1027,7 +1028,9 @@ def _0xd11111(v0, v1):
     return v3
 ```
 (Nếu vẫn chưa hiểu thì lấy ví dụ nè: v0=50, v1=25. Vậy v3 phải =2 thì sẽ là số nguyên nhỏ nhất làm cho v1 >= v0. Còn giả sử v0=51, v1=25 thì v3 phải =3 thì mới là số nguyên nhỏ nhất để v1 >= v0 (Tức là 51/25 làm tròn lên))
+
 (Ghi vậy mai sau em đọc lại cho dễ hiểu)
+
 Như vậy là từ phải loop đi loop lại thì giờ mọi chuyện chỉ cần giải quyết trong một phép toán ngắn ngọn. Vậy là giải quyết xong `_0xd11111()` và `v0`
 
 Bây giờ đến lượt `v2` hay chính là hàm `_0x3b091c()` cần tối ưu hóa
@@ -1091,6 +1094,44 @@ $ python3 very_fun.py
 ISPCTF{d306fu5c4710n_15_5h0r7357_w4y_70_00f3d}  
 ```
 
-(Mặc dù không nhanh kiểu ngay lập tức nhưng < 1 phút là đủ để kiếm flag rồi hehe)
+(Mặc dù không nhanh kiểu ngay lập tức nhưng ~1 phút là đủ để kiếm flag rồi hehe)
 
 ## 6. Misc
+### 6.1 Best Avatar
+Cái này đơn giản thôi chỉ cần vào page FB của ISP để ngắm Avatar là được rồi
+![1](Misc/Best_Ava/1.png)
+Flag: `ISPCTF{ISP_cAptu5e_th3_F1a9}`
+
+### 6.2 Base64
+
+Đề bài cho chúng ta một mã QR. Scan thì được như vầy
+```
+SVNQQ1RGe0g0djNfNF9HMDBEX0Q0eX0=
+```
+Tên bài đã gợi ý luôn cho chúng ta đây là base64 rồi, chỉ cần giải ra là xong rồi
+![1](Misc/Base64/1.png)
+Flag: `ISPCTF{H4v3_4_G00D_D4y}`
+
+### 6.3 New misc
+Đề bài cho chúng ta một file `zip`. Giải nén ra sẽ được một bức ảnh của bác Phạm Văn Đồng (chắc chắn em đã không dùng google lens để tìm) với tiêu đề `Who_is_he` và một file `what.zip` có mật khẩu
+![1](Misc/New_Misc/1.png)
+
+
+Vậy thì mật khẩu hẳn là `Pham Van Dong` rồi. Giải nén file `what.zip` ra ta được 2 file
+![2](Misc/New_Misc/2.png)
+
+File `Flag_here.txt` có nội dung
+```
+Hãy giúp Dipper, Maple và Bốp đánh bại tên Bill Cypher này nhé 
+```
+Bỏ qua lỗi chính tả, xem tiếp bức ảnh kia xem có gì thú vị không nha
+![3](Misc/New_Misc/3.jpg)
+
+Kia có vẻ là một loại cipher nào đó. Theo kinh nghiệm cày phim và ngồi xem theory trên youtube thì đấy là ký tự riêng của Gravity Falls, tra Google là thấy có bảng giải mã liền nè
+![4](Misc/New_Misc/4.jpg)
+
+Sau khi giải mã ra thì các ký tự trong bức ảnh là `ISPCTFBILLCIPHER`. Viết chuẩn lại theo flag form thì ra flag rồi: `ISPCTF{BILLCIPHER}`
+
+
+
+
