@@ -2,7 +2,7 @@
 
 ## Nội dung:
 
-1. [Warm Up](https://github.com/letiendat198/miniCTFWriteUP/blob/master/README.md#1-warm-up)
+1. [Warm Up](#1-warm-up)
 - [1.1 Basic Forensics](https://github.com/letiendat198/miniCTFWriteUP/blob/master/README.md#11-basic-forensics) 
 - [1.2 What is Netcat](https://github.com/letiendat198/miniCTFWriteUP/blob/master/README.md#12-what-is-netcat) 
 - [1.3 Abcbof](https://github.com/letiendat198/miniCTFWriteUP/blob/master/README.md#13-abcbof) 
